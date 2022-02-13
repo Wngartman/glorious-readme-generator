@@ -1,46 +1,80 @@
-// TODO: Include packages needed for this application
+// Gets inquierer
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+function generateReadmes(answers) {
+    return `# ${answers.name}
+
+[Description] ${answers.description}
+
+### Table of Contents
+* [Installation](#Installation)
+* [Usage](#Usage)
+* [Contributors](#Contributors)
+* [Tests](#Tests)
+* [License](#License)
+
+## Installation
+${answers.install}
+
+## Usage
+${answers.usage}
+
+##Contrubutors
+${answers.contributing}
+
+##Tests
+${answers.tests}
+
+##License
+This project is licensed under the ${answers.license}
+`;
+}
 
 inquirer
     .prompt([
         {
             type: 'input',
             name: 'name',
-            message: 'What is your name?',
+            message: 'What is your project name?',
         },
         {
             type: 'input',
-            name: 'location',
-            message: 'Where are you from?',
+            name: 'description',
+            message: "What it your project's description?",
         },
         {
             type: 'input',
-            name: 'hobby',
-            message: 'What is your favorite hobby?',
+            name: 'install',
+            message: 'How do you install?',
         },
         {
             type: 'input',
-            name: 'food',
-            message: 'What is your favorite food?',
+            name: 'usage',
+            message: 'How do you use your app?',
         },
         {
             type: 'input',
-            name: 'github',
-            message: 'Enter your GitHub Username',
+            name: 'contributing',
+            message: 'Enter contributing GitHub Usernames',
         },
         {
             type: 'input',
-            name: 'linkedin',
-            message: 'Enter your LinkedIn URL.',
+            name: 'tests',
+            message: 'Enter tests',
         },
+        {
+            type: 'list',
+            name: 'license',
+            message: 'Choose License',
+            choices: ["MIT", "GPLv2", "Apache", "GPLv3", "BSD 3-clause", "Unlicense"]
+        }
     ])
     .then((answers) => {
-        const htmlPageContent = generateHTML(answers);
+        const readmePageContent = generateReadmes(answers);
 
-        fs.writeFile('index.html', htmlPageContent, (err) =>
-            err ? console.log(err) : console.log('Successfully created index.html!')
+        fs.writeFile('README.md', readmePageContent, (err) =>
+            err ? console.log(err) : console.log('Successfully created readme!')
         );
     });
 

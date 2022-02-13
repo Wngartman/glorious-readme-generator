@@ -21,7 +21,7 @@ ${answers.install}
 ## Usage
 ${answers.usage}
 
-## Contrubutors
+## Contributors
 ${answers.contributing}
 
 ## Tests

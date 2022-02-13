@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+// Template for readme
 function generateReadmes(answers) {
     return `# ${answers.name}
 
@@ -20,17 +21,21 @@ ${answers.install}
 ## Usage
 ${answers.usage}
 
-##Contrubutors
+## Contrubutors
 ${answers.contributing}
 
-##Tests
+## Tests
 ${answers.tests}
 
-##License
-This project is licensed under the ${answers.license}
+## Questions
+For more questions contact ${answers.author}
+
+## License
+This project is licensed under ${answers.license}
 `;
 }
 
+// Prompt for the inquierer questions
 inquirer
     .prompt([
         {
@@ -64,6 +69,11 @@ inquirer
             message: 'Enter tests',
         },
         {
+            type: 'input',
+            name: 'author',
+            message: 'Enter author email',
+        },
+        {
             type: 'list',
             name: 'license',
             message: 'Choose License',
@@ -73,20 +83,8 @@ inquirer
     .then((answers) => {
         const readmePageContent = generateReadmes(answers);
 
+// Writing the new file as README.md with the updated answers
         fs.writeFile('README.md', readmePageContent, (err) =>
-            err ? console.log(err) : console.log('Successfully created readme!')
+            err ? console.log(err) : console.log(`Successfully created  ${answers.name}s' readme!`)
         );
     });
-
-
-// TODO: Create an array of questions for user input
-// const questions = [];
-
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-// function init() {}
-
-// Function call to initialize app
-// init();
